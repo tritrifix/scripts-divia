@@ -1,19 +1,26 @@
-from divia_api import DiviaAPI
-import datetime
+#!/usr/bin/env python3
+"""
+Script pour récupérer les horaires temps réel
+Ligne: L5 univ
+Arrêt: 322
 
-api = DiviaAPI()
-line = api.get_line("88")  # L5 univ
-stop = line.get_stop("322")  # Baudin
-totem_result = stop.totem()  # Interrogation du service TOTEM et récupération des prochains horaires. C’est une liste d’objets « datetime.datetime » qui est retournée par la fonction.
+Utilise la nouvelle API GTFS-RT depuis transport.data.gouv.fr
+(l'ancienne API TOTEM ne fonctionne plus depuis la refonte du site Divia)
+"""
 
-if len(totem_result) >= 2:
-    now = datetime.datetime.now()
-    prochain_bus = totem_result[0]
-    suivant_bus = totem_result[1]
-    minutes_prochain_bus = max(0, (prochain_bus - now).seconds // 60)
-    minutes_suivant_bus = max(0, (suivant_bus - now).seconds // 60)
-else:
+from divia_api.gtfs_realtime import get_next_buses
+
+# Ligne 88 - L5 univ, Arrêt 322
+result = get_next_buses("88", "322", count=2)
+
+minutes_prochain_bus = result.get('minutes_prochain')
+minutes_suivant_bus = result.get('minutes_suivant')
+
+# Conversion en format attendu (N/A si pas de données)
+if minutes_prochain_bus is None:
     minutes_prochain_bus = "N/A"
+if minutes_suivant_bus is None:
     minutes_suivant_bus = "N/A"
 
 print(f'{{"prochain_bus": {minutes_prochain_bus}, "suivant_bus": {minutes_suivant_bus}}}')
+
