@@ -1,0 +1,14 @@
+  - sensor:
+      name: Station Velodi - Eldorado
+      command: "python3 script-divia/velodi-eldorado.py"
+      json_attributes:
+        - bike
+        - dock
+      value_template: "{{ value_json.bike }} - {{ value_json.dock }}"
+  - sensor:
+      name: Station Velodi - Wilson
+      command: "python3 script-divia/velodi-wilson.py"
+      json_attributes:
+        - bike
+        - dock
+      value_template: "{{ value_json.bike }} - {{ value_json.dock }}"
