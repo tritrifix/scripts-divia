@@ -39,7 +39,10 @@ class DiviaAPI:
         self.network = loads(raw_network)
         self.lines = self.network["lignes"].values()
         self.stops = self.network["arrets"].values()
-        self.velodi = VelodiAPI()  # Deprecated, directly import and initialize VelodiAPI instead.
+        try:
+            self.velodi = VelodiAPI()  # Deprecated, directly import and initialize VelodiAPI instead.
+        except (IndexError, Exception):
+            self.velodi = None  # VeloDi API not available
 
     def get_line(self, line_id: str) -> Line:
         """Find a line by specifying its unique identifier."""
