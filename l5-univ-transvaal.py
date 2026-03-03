@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Script pour récupérer les horaires temps réel
-Ligne: L8 chicago
+Ligne: L5 univ
 Arrêt: 322
 
 Utilise la nouvelle API GTFS-RT depuis transport.data.gouv.fr
@@ -10,8 +10,8 @@ Utilise la nouvelle API GTFS-RT depuis transport.data.gouv.fr
 
 from divia_api.gtfs_realtime import get_next_buses
 
-# Ligne 100 - L8 chicago, Arrêt 322
-result = get_next_buses("100", "322", count=2)
+# Ligne 88 - L5 univ, Arrêt 745
+result = get_next_buses("88", "745", count=2)
 
 minutes_prochain_bus = result.get('minutes_prochain')
 minutes_suivant_bus = result.get('minutes_suivant')
